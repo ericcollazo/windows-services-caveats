@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  site:
+    image: aspnet-core
+    ports:
+      - target: 5000
+      - published: 5000
+        mode: host    # host mode networking
+    deploy:        
+        replicas: 1
+        placement:
+            constraints:
+            - node.labels.os == windows   # place service only on Windows nodes
+        endpoint_mode: dnsrr    # dns round robin load balancing
+    networks:
+        - ucp-hrm   # used for Layer 7 routing
+        - myoverlay   # custom overlay
+
+networks:
+  myoverlay:
+    driver: overlay
+  ucp-hrm:
+    external:
+      name: ucp-hrm
