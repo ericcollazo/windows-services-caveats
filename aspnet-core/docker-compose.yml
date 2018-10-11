@@ -1,8 +1,10 @@
+# Use this compose file to run the app in a swarm
+
 version: '3.4'
 
 services:
   site:
-    image: aspnet-core
+    image: aspnet-core  # replace with the name of the image
     ports:
       - target: 5000
       - published: 5000

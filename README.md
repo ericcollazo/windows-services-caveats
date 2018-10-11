@@ -10,6 +10,8 @@ Due to the unique nature of certain Windows features (e.g. networking, security,
 
     Additionally, Docker's DNS Round Robin is the only load balancing strategy supported by Windows Server 2016 today; therefore, for every Docker service scheduled to these nodes, the `--endpoint-mode` parameter must also be specified with a value of `dnsrr`. 
 
+  - When running Docker for Windows there is an issue related to container IP addresses.  The IP address shown when using the `docker inspect` command for a container is incorrect.  To browse a web site or api running in a container you must use the `docker exec` command and query the IP address from within the container (e.g. `ipconfig`).  Also, port assignments are ignored by Docker for Windows when running Windows containers (e.g. `docker run -p 8080:80`).  Run the [example app](https://github.com/ericcollazo/windows-services-caveats/tree/master/aspnet-core) to illustrate this issue.
+
 - **Docker Objects**
 
   - [Configs](https://docs.docker.com/engine/swarm/configs/#windows-support) use the SYSTEM and ADMINISTRATOR permissions
