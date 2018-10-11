@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  portal:
+    image: aspnet-full  # Replace with actual image name
+    ports:
+      - target: 80
+      - published: 8080
+        mode: host    # host mode networking
+    deploy:        
+        replicas: 1
+        placement:
+            constraints:
+            - node.labels.os == windows   # place service only on Windows nodes
+        labels:   # used for Layer 7 routing
+          com.docker.lb.hosts: aspnet-full.com  # Replace with actual FQDN
+          com.docker.lb.network: myoverlay
+          com.docker.lb.port: 8080
+        endpoint_mode: dnsrr    # dns round robin load balancing since not using ingress routing mesh
+    networks:
+        - ucp-hrm   # used for Layer 7 routing
+        - myoverlay   # custom overlay
+
+networks:
+  myoverlay:
+    driver: overlay
+  ucp-hrm:
+    external:
+      name: ucp-hrm
