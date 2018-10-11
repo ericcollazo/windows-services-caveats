@@ -62,7 +62,7 @@ services:
     image: microsoft/iis	# serves a default site on port 80
     ports:
       - target: 80	# the default port for IIS websites
-      - published: 8080   # only used when not using hrm
+      - published: 8080   # the external port to map
         mode: host    # host mode networking
     deploy:        
         replicas: 1
