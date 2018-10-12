@@ -1,29 +1,26 @@
+# Use this compose file to run the app in a swarm
+
 version: '3.4'
 
 services:
-  portal:
-    image: aspnet-full  # Replace with actual image name
+  site:
+    image: aspnet-full  # replace with the name of the image
     ports:
       - target: 80
-      - published: 8080
+      - published: 5000
         mode: host    # host mode networking
-    deploy:        
-        replicas: 1
+    deploy:
         placement:
             constraints:
             - node.labels.os == windows   # place service only on Windows nodes
-        labels:   # used for Layer 7 routing
-          com.docker.lb.hosts: aspnet-full.com  # Replace with actual FQDN
-          com.docker.lb.network: myoverlay
-          com.docker.lb.port: 8080
-        endpoint_mode: dnsrr    # dns round robin load balancing since not using ingress routing mesh
-    networks:
-        - ucp-hrm   # used for Layer 7 routing
-        - myoverlay   # custom overlay
+        endpoint_mode: dnsrr    # dns round robin load balancing
+    secrets:
+        - source: transform
+          target: c:\transform.config
 
-networks:
-  myoverlay:
-    driver: overlay
-  ucp-hrm:
-    external:
-      name: ucp-hrm
+secrets:
+  transform:
+    external: true
+
+# To run as a service use the following:  
+# docker service create --name transform-service --publish mode=host,published=5000,target=80 --endpoint-mode dnsrr --secret src=transform,target="c:\transform.config" aspnet-full
