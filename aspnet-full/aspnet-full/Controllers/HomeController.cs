@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace aspnet_full.Controllers
 {
@@ -10,6 +11,7 @@ namespace aspnet_full.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Message = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             return View();
         }
 
