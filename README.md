@@ -55,7 +55,7 @@ Due to the unique nature of certain Windows features (e.g. networking, security,
 ### Example compose file for a service running on Windows nodes
 
 ```yaml
-version: '3.4'
+version: '3.3'
 
 services:
   portal:
