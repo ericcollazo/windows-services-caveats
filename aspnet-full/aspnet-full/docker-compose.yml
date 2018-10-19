@@ -1,17 +1,17 @@
 # Use this compose file to run the app in a swarm
 
-version: '3.4'
+version: '3.3'
 
 services:
   site:
     image: aspnet-full  # replace with the name of the image
     ports:
       - target: 80
-      - published: 5000
+        published: 5000
         mode: host    # host mode networking
     deploy:
         placement:
-            constraints:
+          constraints:
             - node.labels.os == windows   # place service only on Windows nodes
         endpoint_mode: dnsrr    # dns round robin load balancing
     secrets:

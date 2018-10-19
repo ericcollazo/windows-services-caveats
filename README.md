@@ -62,18 +62,18 @@ services:
     image: microsoft/iis	# serves a default site on port 80
     ports:
       - target: 80	# the default port for IIS websites
-      - published: 8080   # the external port to map
+        published: 8080   # the external port to map
         mode: host    # host mode networking
     deploy:        
-        replicas: 1
-        placement:
-            constraints:
+      replicas: 1
+      placement:
+          constraints:
             - node.labels.os == windows   # place service only on Windows nodes
-        labels:   # used for Layer 7 routing
-          com.docker.lb.hosts: app.example.org	# Replace with a real URL
-          com.docker.lb.network: myoverlay
-          com.docker.lb.port: 8080
-        endpoint_mode: dnsrr    # dns round robin load balancing
+      labels:   # used for Layer 7 routing
+        com.docker.lb.hosts: app.example.org	# Replace with a real URL
+        com.docker.lb.network: myoverlay
+        com.docker.lb.port: 8080
+      endpoint_mode: dnsrr    # dns round robin load balancing
     networks:
         - ucp-hrm   # used for Layer 7 routing
         - myoverlay   # custom overlay
