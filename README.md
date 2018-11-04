@@ -68,7 +68,7 @@ services:
       replicas: 1
       placement:
           constraints:
-            - node.labels.os == windows   # place service only on Windows nodes
+            - engine.labels.os == windows   # place service only on Windows nodes
       labels:   # used for Layer 7 routing
         com.docker.lb.hosts: app.example.org	# Replace with a real URL
         com.docker.lb.network: myoverlay

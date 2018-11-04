@@ -12,7 +12,7 @@ services:
     deploy:
         placement:
           constraints:
-            - node.labels.os == windows   # place service only on Windows nodes
+            - engine.labels.os == windows   # place service only on Windows nodes
         endpoint_mode: dnsrr    # dns round robin load balancing
     secrets:
         - source: transform
