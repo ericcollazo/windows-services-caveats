@@ -58,7 +58,7 @@ Due to the unique nature of certain Windows features (e.g. networking, security,
 version: '3.3'
 
 services:
-  portal:
+  website:
     image: microsoft/iis	# serves a default site on port 80
     ports:
       - target: 80	# the default port for IIS websites
@@ -69,19 +69,15 @@ services:
       placement:
           constraints:
             - engine.labels.os == windows   # place service only on Windows nodes
-      labels:   # used for Layer 7 routing
+      labels:
         com.docker.lb.hosts: app.example.org	# Replace with a real URL
-        com.docker.lb.network: myoverlay
-        com.docker.lb.port: 8080
+        com.docker.lb.network: myoverlay # the network that the layer 7 mesh will hand-off to
+        com.docker.lb.port: 8080 # the port on the network that the hand-off will communicate
       endpoint_mode: dnsrr    # dns round robin load balancing
     networks:
-        - ucp-hrm   # used for Layer 7 routing
-        - myoverlay   # custom overlay
+        - myoverlay   # custom overlay network the service will use
 
 networks:
-  myoverlay:
+  myoverlay:  # the custom service definition
     driver: overlay
-  ucp-hrm:
-    external:
-      name: ucp-hrm
 ```
