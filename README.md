@@ -61,9 +61,7 @@ services:
   website:
     image: microsoft/iis	# serves a default site on port 80
     ports:
-      - target: 80	# the default port for IIS websites
-        published: 8080   # the external port to map
-        mode: host    # host mode networking
+      - mode: host    # host mode networking
     deploy:        
       replicas: 1
       placement:
@@ -71,8 +69,8 @@ services:
             - engine.labels.os == windows   # place service only on Windows nodes
       labels:
         com.docker.lb.hosts: app.example.org	# Replace with a real URL
-        com.docker.lb.network: myoverlay # the network that the layer 7 mesh will hand-off to
-        com.docker.lb.port: 8080 # the port on the network that the hand-off will communicate
+        com.docker.lb.network: mystack_myoverlay # the network that the layer 7 mesh will hand-off to
+        com.docker.lb.port: 80 # the port the service expects traffic on
       endpoint_mode: dnsrr    # dns round robin load balancing
     networks:
         - myoverlay   # custom overlay network the service will use
