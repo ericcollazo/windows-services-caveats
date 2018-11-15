@@ -6,7 +6,7 @@ param (
 ## Apply config transforms if they exist
 
 $webTransformFile = "c:\web.transform.config";
-$appTransformFile = "c:\app.transform.config"
+$appTransformFile = "c:\app.transform.config";
 
 if (Test-Path $webTransformFile) {
     Write-Host "Running web.config transform..."
