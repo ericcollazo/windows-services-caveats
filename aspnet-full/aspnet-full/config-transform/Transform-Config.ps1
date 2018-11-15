@@ -1,13 +1,21 @@
 param (
-    [string]$webConfig = "c:\inetpub\wwwroot\Web.config"
+    [string]$webConfig = "c:\inetpub\wwwroot\Web.config",
+    [string]$appConfig = "c:\app.config"
 )
 
-## Apply web.config transform if exists
+## Apply config transforms if they exist
 
-$transformFile = "c:\transform.config";
+$webTransformFile = "c:\web.transform.config";
+$appTransformFile = "c:\app.transform.config"
 
-if (Test-Path $transformFile) {
+if (Test-Path $webTransformFile) {
     Write-Host "Running web.config transform..."
-    \WebConfigTransformRunner.1.0.0.1\Tools\WebConfigTransformRunner.exe $webConfig $transformFile $webConfig
+    \WebConfigTransformRunner.1.0.0.1\Tools\WebConfigTransformRunner.exe $webConfig $webTransformFile $webConfig
+    Write-Host "Done!"
+}
+
+if (Test-Path $appTransformFile) {
+    Write-Host "Running app.config transform..."
+    \WebConfigTransformRunner.1.0.0.1\Tools\WebConfigTransformRunner.exe $appConfig $appTransformFile $appConfig
     Write-Host "Done!"
 }

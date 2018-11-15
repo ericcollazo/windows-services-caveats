@@ -1,2 +1,2 @@
-transform.config
+*.transform.config
 Dockerfile
