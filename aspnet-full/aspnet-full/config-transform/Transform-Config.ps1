@@ -1,5 +1,5 @@
 param (
-    [string]$webConfig = "c:\inetpub\wwwroot\Web.config",
+    [string]$webConfig = "c:\inetpub\wwwroot\web.config",
     [string]$appConfig = "c:\app.config"
 )
 
