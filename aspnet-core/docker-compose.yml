@@ -7,7 +7,7 @@ services:
     image: aspnet-core  # replace with the name of the image
     ports:
       - target: 5000
-      - published: 5000
+        published: 5000
         mode: host    # host mode networking
     deploy:        
         replicas: 1

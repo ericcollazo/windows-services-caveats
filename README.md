@@ -6,7 +6,7 @@ Due to the unique nature of certain Windows features (e.g. networking, security,
 
 - **[Networking](https://success.docker.com/article/modernizing-traditional-dot-net-applications#networking) (see [compose file](#example-compose-file-for-a-service-running-on-windows-nodes) example below)**
 
-  - For services that need to be available outside the swarm, Linux containers are able to use Docker swarm's [ingress routing mesh](https://docs.docker.com/engine/swarm/ingress/). However, Windows Server 2016 does not currently support the ingress routing mesh. Therefore Docker services scheduled for Windows Server 2016 nodes that need to be accessed outside of swarm need to be configured to bypass Docker's routing mesh. This is done by publishing ports using `host` mode which publishes the service's port directly on the node where it is running.
+  - For services that need to be reachable outside the swarm, Linux containers are able to use Docker swarm's [ingress routing mesh](https://docs.docker.com/engine/swarm/ingress/). However, Windows Server 2016 does not currently support the ingress routing mesh. Therefore Docker services scheduled for Windows Server 2016 nodes that need to be accessed outside of swarm need to be configured to bypass Docker's routing mesh. This is done by publishing ports using `host` mode which publishes the service's port directly on the node where it is running.
 
     Additionally, Docker's DNS Round Robin is the only load balancing strategy supported by Windows Server 2016 today; therefore, for every Docker service scheduled to these nodes, the `--endpoint-mode` parameter must also be specified with a value of `dnsrr`. 
 
