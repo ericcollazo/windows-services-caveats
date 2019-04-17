@@ -1,22 +1,23 @@
-## Use build image
-FROM microsoft/dotnet:2.1-sdk AS build-env
+# Use build image
+FROM mcr.microsoft.com/dotnet/core/sdk AS build-env
 
-## Set working directory
+# Set working directory
 WORKDIR /app
 
-# copy csproj and restore as distinct layers
-COPY *.csproj ./
-
-# Restore dotnet dependancies
-RUN dotnet restore
-
-# copy everything else and build
+# copy everything and build
 COPY . ./
+
+# Publish to 'out' folder
 RUN dotnet publish -c Release -o out
 
 # build runtime image
-FROM microsoft/dotnet:2.1-aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet
+
+# Set working directory
 WORKDIR /app
+
+# Copy build artifacts from previous stage
 COPY --from=build-env /app/out .
 
+# Ensure that the dll file name matches the tag specified in the 'docker build' command
 ENTRYPOINT ["dotnet", "aspnet-core.dll"]
