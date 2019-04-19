@@ -1,5 +1,7 @@
 FROM microsoft/aspnet:4.7.1-windowsservercore-1709
 
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'Continue'; $verbosePreference='Continue';"]
+
 WORKDIR /
 
 RUN $ProgressPreference = 'SilentlyContinue'; \
